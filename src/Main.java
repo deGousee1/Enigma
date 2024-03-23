@@ -55,7 +55,7 @@ public class Main {
         for (int i = 0; i < textLength; i++) {
             // Scrambling engine
             // Letter input
-            System.out.println("Rotor 1: " + positionRotor1 + 1 + ", Rotor2: " + positionRotor2 + 1 + ", Rotor3: " + positionRotor3 + 1 + ".");
+            System.out.println("Rotor 1: " + (positionRotor1 + 1) + ", Rotor2: " + (positionRotor2 + 1) + ", Rotor3: " + (positionRotor3 + 1) + ".");
             System.out.println("Enter the letter for scrambling (Only uppercase letters): ");
             char letter = scanner.next().charAt(0);
             // Rotor 1
