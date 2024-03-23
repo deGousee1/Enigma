@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -73,40 +74,10 @@ public class Main {
             char letter = scanner.next().charAt(0);
             // Rotor 1
             rotorInput1 = getAlphabetIndex(alphabet, letter) + positionRotor1;
+            rotorOutput1 = getOutputForRotor1(rotorInput1, rotor1Scrambler);
 
-            if (rotorInput1 > 25) {
-                rotorInput1 = rotorInput1 - 26;
-            }
-            else {
-                if (rotorInput1 < 0) {
-                    rotorInput1 = rotorInput1 + 26;
-                }
-            }
-
-            rotorOutput1 = rotor1Scrambler.get(rotorInput1);
             // Rotor 2
-            if (positionRotor1 > positionRotor2) {
-                rotorInput2 = rotorOutput1 - (positionRotor1 - positionRotor2);
-            }
-            else {
-                if (positionRotor1 < positionRotor2) {
-                    rotorInput2 = rotorOutput1 + (positionRotor2 - positionRotor1);
-                }
-                else {
-                    rotorInput2 = rotorOutput1;
-                }
-            }
-
-            if (rotorInput2 > 25) {
-                rotorInput2 = rotorInput2 - 26;
-            }
-            else {
-                if (rotorInput2 < 0) {
-                    rotorInput2 = rotorInput2 + 26;
-                }
-            }
-
-            rotorOutput2 = rotor2Scrambler.get(rotorInput2);
+            rotorOutput2 = getOutputForRotor2(positionRotor1, positionRotor2, rotorOutput1, rotor2Scrambler);
             // Rotor 3
             if (positionRotor2 > positionRotor3) {
                 rotorInput3 = rotorOutput2 - (positionRotor2 - positionRotor3);
@@ -249,5 +220,43 @@ public class Main {
             }
         }
         return -1; // Return -1 if the letter is not in the alphabet
+    }
+
+    private static int getOutputForRotor1(int rotorInput1, List<Integer> rotor1Scrambler) {
+        if (rotorInput1 > 25) {
+            rotorInput1 = rotorInput1 - 26;
+        }
+        else {
+            if (rotorInput1 < 0) {
+                rotorInput1 = rotorInput1 + 26;
+            }
+        }
+        return rotor1Scrambler.get(rotorInput1);
+    }
+
+    private static int getOutputForRotor2(int positionRotor1, int positionRotor2, int rotorOutput1, List<Integer> rotor2Scrambler) {
+        int rotorInput2 = 0;
+        if (positionRotor1 > positionRotor2) {
+            rotorInput2 = rotorOutput1 - (positionRotor1 - positionRotor2);
+        }
+        else {
+            if (positionRotor1 < positionRotor2) {
+                rotorInput2 = rotorOutput1 + (positionRotor2 - positionRotor1);
+            }
+            else {
+                rotorInput2 = rotorOutput1;
+            }
+        }
+
+        if (rotorInput2 > 25) {
+            rotorInput2 = rotorInput2 - 26;
+        }
+        else {
+            if (rotorInput2 < 0) {
+                rotorInput2 = rotorInput2 + 26;
+            }
+        }
+
+        return rotor2Scrambler.get(rotorInput2);
     }
 }
