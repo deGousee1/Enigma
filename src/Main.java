@@ -17,25 +17,24 @@ public class Main {
         // Reverser letter scrambler list
         List<Integer> reverserScrambler = Arrays.asList(11, 3, 13, 1, 5, 4, 16, 12, 22, 23, 17, 0, 7, 2, 24, 18, 6, 10, 15, 21, 25, 19, 8, 9, 14, 20);
         // Result list
-        List<String> ResultList = new java.util.ArrayList<>(List.of());
+        List<String> ResultList = new ArrayList<>(List.of());
 
 
         int rotor1Display = 1;
         int rotor2Display = 1;
         int rotor3Display = 1; // rotorDisplay variables could be removed
 
+
         // Necessary variables initialization
         // Rotor 1
         int rotorInput1;
         int rotorOutput1;
         // Rotor 2
-        int rotorInput2;
         int rotorOutput2;
         //Rotor 3
-        int rotorInput3;
         int rotorOutput3;
         // Reverser
-        int reverserInput;
+        int reverserInput = 0;
         int reverserOutput;
         //Rotor 3 back
         int rotorInput3Back;
@@ -79,40 +78,9 @@ public class Main {
             // Rotor 2
             rotorOutput2 = getOutputForRotor2(positionRotor1, positionRotor2, rotorOutput1, rotor2Scrambler);
             // Rotor 3
-            if (positionRotor2 > positionRotor3) {
-                rotorInput3 = rotorOutput2 - (positionRotor2 - positionRotor3);
-            }
-            else {
-                if (positionRotor2 < positionRotor3) {
-                    rotorInput3 = rotorOutput2 + (positionRotor3 - positionRotor2);
-                }
-                else {
-                    rotorInput3 = rotorOutput2;
-                }
-            }
-
-            if (rotorInput3 > 25) {
-                rotorInput3 = rotorInput3 - 26;
-            }
-            else {
-                if (rotorInput3 < 0) {
-                    rotorInput3 = rotorInput3 + 26;
-                }
-            }
-
-            rotorOutput3 = rotor3Scrambler.get(rotorInput3);
+            rotorOutput3 = getOutputForRotor3(positionRotor2, positionRotor3, rotorOutput2, rotor3Scrambler);
             // Reverser
-            reverserInput = rotorOutput3 - positionRotor3;
-
-            if (reverserInput > 25) {
-                reverserInput = reverserInput - 26;
-            }
-            else {
-                if (reverserInput < 0) {
-                    reverserInput = reverserInput + 26;
-                }
-            }
-            reverserOutput = reverserScrambler.get(reverserInput);
+            reverserOutput = getOutputForReverser(positionRotor3, rotorOutput3, reverserScrambler);
 
             // Rotor 3 back
             rotorInput3Back = reverserOutput + positionRotor3;
@@ -258,5 +226,44 @@ public class Main {
         }
 
         return rotor2Scrambler.get(rotorInput2);
+    }
+    private static int getOutputForRotor3(int positionRotor2, int positionRotor3, int rotorOutput2, List<Integer> rotor3Scrambler) {
+        int rotorInput3 = 0;
+        if (positionRotor2 > positionRotor3) {
+            rotorInput3 = rotorOutput2 - (positionRotor2 - positionRotor3);
+        }
+        else {
+            if (positionRotor2 < positionRotor3) {
+                rotorInput3 = rotorOutput2 + (positionRotor3 - positionRotor2);
+            }
+            else {
+                rotorInput3 = rotorOutput2;
+            }
+        }
+
+        if (rotorInput3 > 25) {
+            rotorInput3 = rotorInput3 - 26;
+        }
+        else {
+            if (rotorInput3 < 0) {
+                rotorInput3 = rotorInput3 + 26;
+            }
+        }
+
+        return rotor3Scrambler.get(rotorInput3);
+    }
+    private static int getOutputForReverser(int positionRotor3, int rotorOutput3, List<Integer> reverserScrambler) {
+        int reverserInput = 0;
+        reverserInput = rotorOutput3 - positionRotor3;
+
+        if (reverserInput > 25) {
+            reverserInput = reverserInput - 26;
+        }
+        else {
+            if (reverserInput < 0) {
+                reverserInput = reverserInput + 26;
+            }
+        }
+        return reverserScrambler.get(reverserInput);
     }
 }
