@@ -19,12 +19,6 @@ public class Main {
         // Result list
         List<String> ResultList = new ArrayList<>(List.of());
 
-
-        // int rotor1Display = 1;
-        // int rotor2Display = 1;
-        // int rotor3Display = 1; // rotorDisplay variables could be removed
-
-
         // Necessary variables initialization
         // Rotor 1
         int rotorInput1;
@@ -50,7 +44,6 @@ public class Main {
         int positionRotor2 = scanner.nextInt() - 1;
         System.out.println("Choose the starting position of the third rotor: ");
         int positionRotor3 = scanner.nextInt() - 1;
-
 
         for (int i = 0; i < textLength; i++) {
             // Scrambling engine
@@ -100,7 +93,6 @@ public class Main {
         System.out.println("Scrambled text: " + ResultList);
 
     }
-
 
     private static int getAlphabetIndex(List<Character> alphabet, char letter) {
         for (int i = 0; i < alphabet.size(); i++) {
@@ -196,7 +188,6 @@ public class Main {
 
         return rotor3Scrambler.get(rotorInput3);
     }
-
     private static int getOutputForRotor2Back(int positionRotor3, int positionRotor2, int rotorOutput3, List<Integer> rotor2Scrambler) {
         int rotorInput2;
         if (positionRotor3 > positionRotor2) {
