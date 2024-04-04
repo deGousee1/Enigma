@@ -1,15 +1,14 @@
 import java.util.List;
 
 public class ScramblingEngine {
-
     private final List<Character> alphabet;
     private final List<Integer> rotor1Scrambler;
     private final List<Integer> rotor2Scrambler;
     private final List<Integer> rotor3Scrambler;
     private final List<Integer> reverserScrambler;
-    private final int positionRotor1;
-    private final int positionRotor2;
-    private final int positionRotor3;
+    private int positionRotor1;
+    private int positionRotor2;
+    private int positionRotor3;
     private final int reverserInput;
 
     //Constructor
@@ -43,8 +42,58 @@ public class ScramblingEngine {
         // Rotor 1 back
         rotorOutput1 = getOutputForRotor1Back(positionRotor2, positionRotor1, rotorOutput2, rotor1Scrambler);
         // Result
-        System.out.println("Rotor 1scr: " + (positionRotor1 + 1) + ", Rotor2scr: " + (positionRotor2 + 1) + ", Rotor3scr: " + (positionRotor3 + 1) + ".");
         return getResultLetter(positionRotor1, rotorOutput1, alphabet);
+    }
+
+    // Method for updating the position of Rotor 1
+    public void updateRotor1Position(int positionRotor1) {
+        this.positionRotor1 = positionRotor1;
+    }
+
+    // Method for counting the position of Rotor 1
+    public int getPositionRotor1() {
+        if (positionRotor1 == 25) {
+            positionRotor1 = 0;
+        } else {
+            positionRotor1 = positionRotor1 + 1;
+        }
+        return this.positionRotor1;
+    }
+
+    // Method for updating the position of Rotor 2
+    public void updateRotor2Position(int positionRotor2) {
+        this.positionRotor2 = positionRotor2;
+    }
+
+    // Method for counting the position of Rotor 2
+    public int getPositionRotor2() {
+        if (positionRotor1 == 25) {
+            if (positionRotor2 == 25) {
+                positionRotor2 = 0;
+            } else {
+                positionRotor2 = positionRotor2 + 1;
+            }
+        }
+        return this.positionRotor2;
+    }
+
+    // Method for updating the position of Rotor 3
+    public void updateRotor3Position(int positionRotor3) {
+        this.positionRotor3 = positionRotor3;
+    }
+
+    // Method for counting the position of Rotor 3
+    public int getPositionRotor3() {
+        if (positionRotor1 == 25) {
+            if (positionRotor2 == 25) {
+                if (positionRotor3 == 25) {
+                    positionRotor3 = 0;
+                } else {
+                    positionRotor3 = positionRotor3 + 1;
+                }
+            }
+        }
+        return this.positionRotor3;
     }
 
     // Get alphabet index (converts the letter given by the user into a number)
@@ -213,4 +262,3 @@ public class ScramblingEngine {
         return resultLetter;
     }
 }
-

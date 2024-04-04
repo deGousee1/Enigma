@@ -36,40 +36,36 @@ public class Main {
         System.out.println("Choose the starting position of the third rotor: ");
         int positionRotor3 = scanner.nextInt() - 1;
 
-
+        // Calling the ScramblingEngine constructor
+        ScramblingEngine engine = new ScramblingEngine(alphabet, rotor1Scrambler, rotor2Scrambler, rotor3Scrambler, reverserScrambler, reverserInput, positionRotor1, positionRotor2, positionRotor3);
 
         for (int i = 0; i < textLength; i++) {
-            // Scrambling engine
             // Letter input and rotor position display
             System.out.println("Rotor 1: " + (positionRotor1 + 1) + ", Rotor2: " + (positionRotor2 + 1) + ", Rotor3: " + (positionRotor3 + 1) + ".");
             System.out.println("Enter the letter for scrambling (Only uppercase letters): ");
             char letter = scanner.next().charAt(0);
+
             // Scrambling engine
-            ScramblingEngine engine = new ScramblingEngine(alphabet, rotor1Scrambler, rotor2Scrambler, rotor3Scrambler, reverserScrambler, reverserInput, positionRotor1, positionRotor2, positionRotor3);
             // Getting the result from the engine
             resultLetter = engine.scramble(letter);
             //Printing result letter
             System.out.println("Scrambling result: " + resultLetter);
             ResultList.add(resultLetter);
+
             // Automatic rotor movement
-            if (positionRotor1 == 25) {
-                positionRotor1 = 0;
-                if (positionRotor2 == 25) {
-                    positionRotor2 = 0;
-                    if (positionRotor3 == 25) {
-                        positionRotor3 = 0;
-                    } else {
-                        positionRotor3 = positionRotor3 + 1;
-                    }
-                } else {
-                    positionRotor2 = positionRotor2 + 1;
-                }
-            } else {
-                positionRotor1 = positionRotor1 + 1;
-            }
+            // Rotor 3 position calculation order and update
+            positionRotor3 = engine.getPositionRotor3();
+            engine.updateRotor3Position(positionRotor3);
+
+            // Rotor 2 position calculation order and update
+            positionRotor2 = engine.getPositionRotor2();
+            engine.updateRotor2Position(positionRotor2);
+
+            // Rotor 1 position calculation order and update
+            positionRotor1 = engine.getPositionRotor1();
+            engine.updateRotor1Position(positionRotor1);
         }
         // Printing the full result
         System.out.println("Scrambled text: " + ResultList);
-
     }
 }
