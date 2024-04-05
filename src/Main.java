@@ -32,6 +32,7 @@ public class Main {
 
         // Taking the text for scrambling from the user
         System.out.println("Enter the letter for scrambling (Only uppercase letters): ");
+        System.out.println("Enter the text for scrambling (Only uppercase letters and no spaces): ");
         String textToScramble = scanner.next();
         int textLength = textToScramble.length();
 
