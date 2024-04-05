@@ -9,16 +9,14 @@ public class ScramblingEngine {
     private int positionRotor1;
     private int positionRotor2;
     private int positionRotor3;
-    private final int reverserInput;
 
     //Constructor
-    public ScramblingEngine(List<Character> alphabet, List<Integer> rotor1Scrambler, List<Integer> rotor2Scrambler, List<Integer> rotor3Scrambler, List<Integer> reverserScrambler, int reverserInput, int positionRotor1, int positionRotor2, int positionRotor3) {
+    public ScramblingEngine(List<Character> alphabet, List<Integer> rotor1Scrambler, List<Integer> rotor2Scrambler, List<Integer> rotor3Scrambler, List<Integer> reverserScrambler, int positionRotor1, int positionRotor2, int positionRotor3) {
         this.alphabet = alphabet;
         this.rotor1Scrambler = rotor1Scrambler;
         this.rotor2Scrambler = rotor2Scrambler;
         this.rotor3Scrambler = rotor3Scrambler;
         this.reverserScrambler = reverserScrambler;
-        this.reverserInput = reverserInput;
         this.positionRotor1 = positionRotor1;
         this.positionRotor2 = positionRotor2;
         this.positionRotor3 = positionRotor3;
@@ -28,6 +26,7 @@ public class ScramblingEngine {
     public char scramble(Character letter) {
         // Rotor 1
         int rotorInput1 = getAlphabetIndex(alphabet, letter) + positionRotor1;
+        checkInputLetter(rotorInput1, positionRotor1);
         int rotorOutput1 = getOutputForRotor1(rotorInput1, rotor1Scrambler);
         // Rotor 2
         int rotorOutput2 = getOutputForRotor2(positionRotor1, positionRotor2, rotorOutput1, rotor2Scrambler);
@@ -36,13 +35,21 @@ public class ScramblingEngine {
         // Reverser
         int reverserOutput = getOutputForReverser(positionRotor3, rotorOutput3, reverserScrambler);
         // Rotor 3 back
-        rotorOutput3 = getOutputForRotor3Back(positionRotor3, reverserOutput, reverserInput, rotor3Scrambler);
+        rotorOutput3 = getOutputForRotor3Back(positionRotor3, reverserOutput, rotor3Scrambler);
         // Rotor 2 back
         rotorOutput2 = getOutputForRotor2Back(positionRotor3, positionRotor2, rotorOutput3, rotor2Scrambler);
         // Rotor 1 back
         rotorOutput1 = getOutputForRotor1Back(positionRotor2, positionRotor1, rotorOutput2, rotor1Scrambler);
         // Result
         return getResultLetter(positionRotor1, rotorOutput1, alphabet);
+    }
+
+    // Method checking if the given input letter is valid
+    public static void checkInputLetter(int rotorInput1, int positionRotor1) {
+        if (rotorInput1 == positionRotor1 - 1) {
+            System.out.println("The given symbol is incorrect. Please use only uppercase letters of the english alphabet.");
+            System.exit(0);
+        }
     }
 
     // Method for updating the position of Rotor 1
@@ -103,7 +110,7 @@ public class ScramblingEngine {
                 return i;
             }
         }
-        return -1; // Return -1 if the letter is not in the alphabet
+        return -1;
     }
 
     // Rotor 1 output
@@ -138,7 +145,6 @@ public class ScramblingEngine {
                 rotorInput2 = rotorInput2 + 26;
             }
         }
-
         return rotor2Scrambler.get(rotorInput2);
     }
 
@@ -162,7 +168,6 @@ public class ScramblingEngine {
                 rotorInput3 = rotorInput3 + 26;
             }
         }
-
         return rotor3Scrambler.get(rotorInput3);
     }
 
@@ -182,18 +187,13 @@ public class ScramblingEngine {
     }
 
     // Rotor 3 output when going BACK
-    private static int getOutputForRotor3Back(int positionRotor3, int reverserOutput, int reverserInput, List<Integer> rotor3Scrambler) {
+    private static int getOutputForRotor3Back(int positionRotor3, int reverserOutput, List<Integer> rotor3Scrambler) {
         int rotorInput3;
         rotorInput3 = reverserOutput + positionRotor3;
 
         if (rotorInput3 > 25) {
             rotorInput3 = rotorInput3 - 26;
-        } else {
-            if (reverserInput < 0) {
-                rotorInput3 = rotorInput3 + 26;
-            }
         }
-
         return rotor3Scrambler.get(rotorInput3);
     }
 

@@ -16,31 +16,27 @@ public class Main {
         // Reverser letter scrambler list
         List<Integer> reverserScrambler = Arrays.asList(11, 3, 13, 1, 5, 4, 16, 12, 22, 23, 17, 0, 7, 2, 24, 18, 6, 10, 15, 21, 25, 19, 8, 9, 14, 20);
 
-        // Necessary variables initialization
-        int reverserInput = 0;
-        // Result variables
-        char resultLetter;
-        // Result string
+        // Result string initialization
         StringBuilder result = new StringBuilder();
-
-        // Text length
-        //System.out.println("Type in the length of the text you want to scramble: ");
-        //int textLength = scanner.nextInt();
 
         // Initial setting of rotors made by the user
         System.out.println("Choose the starting position of the first rotor (from 1 to 26): ");
         int positionRotor1 = scanner.nextInt() - 1;
+        checkRotor1Setting(positionRotor1); // Checking if the given rotor position is valid
         System.out.println("Choose the starting position of the second rotor: ");
         int positionRotor2 = scanner.nextInt() - 1;
+        checkRotor2Setting(positionRotor2); // Checking if the given rotor position is valid
         System.out.println("Choose the starting position of the third rotor: ");
         int positionRotor3 = scanner.nextInt() - 1;
+        checkRotor3Setting(positionRotor3); // Checking if the given rotor position is valid
 
+        // Taking the text for scrambling from the user
         System.out.println("Enter the letter for scrambling (Only uppercase letters): ");
         String textToScramble = scanner.next();
         int textLength = textToScramble.length();
 
         // Calling the ScramblingEngine constructor
-        ScramblingEngine engine = new ScramblingEngine(alphabet, rotor1Scrambler, rotor2Scrambler, rotor3Scrambler, reverserScrambler, reverserInput, positionRotor1, positionRotor2, positionRotor3);
+        ScramblingEngine engine = new ScramblingEngine(alphabet, rotor1Scrambler, rotor2Scrambler, rotor3Scrambler, reverserScrambler, positionRotor1, positionRotor2, positionRotor3);
 
         for (int i = 0; i < textLength; i++) {
             // Letter input and rotor position display
@@ -49,7 +45,7 @@ public class Main {
 
             // Scrambling engine
             // Getting the result from the engine
-            resultLetter = engine.scramble(letter);
+            char resultLetter = engine.scramble(letter);
             //Printing result letter and adding resultLetter to the Result string
             System.out.println("Scrambling result: " + resultLetter);
             result.append(resultLetter);
@@ -69,5 +65,29 @@ public class Main {
         }
         // Printing the full result
         System.out.println("Scrambled text: " + result);
+    }
+
+    // Method checking if Rotor 1 position is valid
+    private static void checkRotor1Setting(int positionRotor1) {
+        if (positionRotor1 > 25 || positionRotor1 < 0){
+            System.out.println("The given Rotor setting is invalid. Please use a number between 1 and 26.");
+            System.exit(0);
+        }
+    }
+
+    // Method checking if Rotor 2 position is valid
+    private static void checkRotor2Setting(int positionRotor2) {
+        if (positionRotor2 > 25 || positionRotor2 < 0){
+            System.out.println("The given Rotor setting is invalid. Please use a number between 1 and 26.");
+            System.exit(0);
+        }
+    }
+
+    // Method checking if Rotor 3 position is valid
+    private static void checkRotor3Setting(int positionRotor3) {
+        if (positionRotor3 > 25 || positionRotor3 < 0){
+            System.out.println("The given Rotor setting is invalid. Please use a number between 1 and 26.");
+            System.exit(0);
+        }
     }
 }
