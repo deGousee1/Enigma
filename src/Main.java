@@ -35,7 +35,7 @@ public class Main {
         System.out.println("Choose the starting position of the third rotor: ");
         int positionRotor3 = scanner.nextInt() - 1;
 
-        System.out.println("Enter the letter for scrambling (Only uppercase letters): ");
+        System.out.println("Enter the text for scrambling (Only uppercase letters and no spaces): ");
         String textToScramble = scanner.next();
         int textLength = textToScramble.length();
 
